@@ -1,0 +1,149 @@
+local CoreGui = game:GetService("CoreGui")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local UserInputService = game:GetService("UserInputService")
+
+local AlwaysGreenEnabled = false
+local TOGGLE_KEY = Enum.KeyCode.RightShift
+
+local EARLY_GRADES = {
+    ["Early"]          = true,
+    ["Late"]           = true,
+    ["Good"]           = true,
+    ["Slightly Early"] = true,
+    ["Slightly Late"]  = true,
+    ["Miss"]           = true,
+    ["Bad"]            = true,
+}
+
+local PERFECT_GRADE  = "Excellent"
+local PERFECT_TIMING = 1
+local TIMING_MIN     = 0.05
+local TIMING_MAX     = 1.95
+
+local function createGui()
+    local existing = CoreGui:FindFirstChild("AlwaysGreenGui")
+    if existing then existing:Destroy() end
+
+    local ScreenGui = Instance.new("ScreenGui")
+    ScreenGui.Name = "AlwaysGreenGui"
+    ScreenGui.ResetOnSpawn = false
+    ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    ScreenGui.Parent = CoreGui
+
+    local ToggleBtn = Instance.new("TextButton")
+    ToggleBtn.Name = "ToggleBtn"
+    ToggleBtn.Size = UDim2.new(0, 160, 0, 44)
+    ToggleBtn.Position = UDim2.new(0.5, -80, 0.05, 0)
+    ToggleBtn.AnchorPoint = Vector2.new(0, 0)
+    ToggleBtn.Text = "ALWAYS GREEN: OFF"
+    ToggleBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+    ToggleBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    ToggleBtn.Font = Enum.Font.SourceSansBold
+    ToggleBtn.TextSize = 15
+    ToggleBtn.AutoButtonColor = false
+    ToggleBtn.Parent = ScreenGui
+
+    local Corner = Instance.new("UICorner")
+    Corner.CornerRadius = UDim.new(0, 8)
+    Corner.Parent = ToggleBtn
+
+    local Stroke = Instance.new("UIStroke")
+    Stroke.Color = Color3.fromRGB(255, 255, 255)
+    Stroke.Thickness = 1.2
+    Stroke.Transparency = 0.7
+    Stroke.Parent = ToggleBtn
+
+    ToggleBtn.MouseEnter:Connect(function()
+        ToggleBtn.BackgroundTransparency = 0.15
+    end)
+
+    ToggleBtn.MouseLeave:Connect(function()
+        ToggleBtn.BackgroundTransparency = 0
+    end)
+
+    return ScreenGui, ToggleBtn
+end
+
+local ScreenGui, ToggleBtn = createGui()
+
+local function updateToggleUI()
+    if AlwaysGreenEnabled then
+        ToggleBtn.Text = "ALWAYS GREEN: ON"
+        ToggleBtn.BackgroundColor3 = Color3.fromRGB(40, 180, 40)
+    else
+        ToggleBtn.Text = "ALWAYS GREEN: OFF"
+        ToggleBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+    end
+end
+
+ToggleBtn.MouseButton1Click:Connect(function()
+    AlwaysGreenEnabled = not AlwaysGreenEnabled
+    updateToggleUI()
+end)
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if gameProcessed then return end
+    if input.KeyCode == TOGGLE_KEY then
+        ToggleBtn.Visible = not ToggleBtn.Visible
+    end
+end)
+
+local Comms      = ReplicatedStorage:WaitForChild("Comms")
+local ActionRE   = Comms:WaitForChild("ActionProvider"):WaitForChild("RE")
+local FinishShot = ActionRE:WaitForChild("FinishShot")
+local ShotReport = ActionRE:WaitForChild("ShotReport")
+
+local WATCHED_REMOTES = {
+    [FinishShot] = true,
+    [ShotReport] = true,
+}
+
+local function patchTable(t)
+    if t.TimingValue  ~= nil then t.TimingValue  = PERFECT_TIMING end
+    if t.t            ~= nil then t.t            = PERFECT_TIMING end
+    if t.Alpha        ~= nil then t.Alpha        = PERFECT_TIMING end
+    if t.Grade        ~= nil then t.Grade        = PERFECT_GRADE  end
+    if t.IsPerfect    ~= nil then t.IsPerfect    = true           end
+    if t.Perfect      ~= nil then t.Perfect      = true           end
+    if t.IsGreen      ~= nil then t.IsGreen      = true           end
+    if t.IsSuccessful ~= nil then t.IsSuccessful = true           end
+    if t.Coverage     ~= nil then t.Coverage     = 0              end
+end
+
+local function patchArgs(args)
+    for i, v in ipairs(args) do
+        local vType = type(v)
+
+        if vType == "table" then
+            patchTable(v)
+        elseif vType == "string" then
+            if EARLY_GRADES[v] then
+                args[i] = PERFECT_GRADE
+            end
+        elseif vType == "boolean" then
+            if not v then
+                args[i] = true
+            end
+        elseif vType == "number" then
+            if v >= TIMING_MIN and v <= TIMING_MAX then
+                args[i] = PERFECT_TIMING
+            end
+        end
+    end
+end
+
+local oldNamecall
+oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
+    local method = getnamecallmethod()
+
+    if AlwaysGreenEnabled
+        and method == "FireServer"
+        and WATCHED_REMOTES[self]
+    then
+        local args = { ... }
+        patchArgs(args)
+        return oldNamecall(self, unpack(args))
+    end
+
+    return oldNamecall(self, ...)
+end)
