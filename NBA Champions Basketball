@@ -142,7 +142,7 @@ oldNamecall = hookmetamethod(game, "__namecall", function(self, ...)
     then
         local args = { ... }
         patchArgs(args)
-        return oldNamecall(self, unpack(args))
+        return oldNamecall(self, table.unpack(args))
     end
 
     return oldNamecall(self, ...)
