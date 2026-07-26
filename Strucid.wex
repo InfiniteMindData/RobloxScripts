@@ -1,625 +1,625 @@
-local _0x0000 = _0x0001:_0x0002("_0x0000")
-local _0x0003 = _0x0000._0x0003
-local _0x0004 = _0x0001:_0x0002("_0x0004")
-local _0x0005 = _0x0001:_0x0002("_0x0005")
-local _0x0006 = _0x0001:_0x0002("_0x0006")
-local _0x0007 = _0x0001:_0x0002("_0x0007")
-local _0x0008 = _0x0001:_0x0002("_0x0008")
-local _0x0009 = _0x0001:_0x0002("_0x0009")
-local _0x000a = _0x0001:_0x0002("_0x000a")
-local _0x000b = _0x0003:_0x000c("_0x000d"):_0x000e("_0x000f")
-if _0x000b then _0x000b:_0x0010() end
-local _0x0011 = {
-_0x0012 = false,
-_0x0013 = false,
-_0x0014 = false,
-_0x0015 = 0.04,
-_0x0016 = false,
-_0x0017 = false,
-_0x0018 = 16,
-_0x0019 = 50,
-_0x001a = false,
-_0x001b = false,
-_0x001c = false,
-_0x001d = 90,
-_0x001e = false,
-_0x001f = 6,
-_0x0020 = _0x0021._0x0022(0, 255, 170),
-_0x0023 = false,
-_0x0024 = false,
-_0x0025 = _0x0021._0x0022(115, 80, 255),
-_0x0026 = _0x0027._0x0028._0x0029
+local Players = game:GetService((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local LocalPlayer = Players.LocalPlayer
+local TweenService = game:GetService((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local UserInputService = game:GetService((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local RunService = game:GetService((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local ReplicatedStorage = game:GetService((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local Workspace = game:GetService((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local Lighting = game:GetService((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local TeleportService = game:GetService((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local oldUI = LocalPlayer:WaitForChild((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)):FindFirstChild((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+if oldUI then oldUI:Destroy() end
+local Config = {
+NoRecoil = false,
+NoSpread = false,
+RapidFire = false,
+FireRateSpeed = 0.04,
+ESP = false,
+ESPNames = false,
+WalkSpeed = 16,
+JumpPower = 50,
+SpeedHack = false,
+JumpHack = false,
+FOVEnabled = false,
+FOVValue = 90,
+CrosshairEnabled = false,
+CrosshairSize = 6,
+CrosshairColor = Color3.fromRGB(0, 255, 170),
+Fullbright = false,
+NoFog = false,
+Accent = Color3.fromRGB(115, 80, 255),
+ToggleKey = Enum.KeyCode.RightControl
 }
-local _0x002a = {
-_0x002b = _0x0009._0x002b,
-_0x002c = _0x0009._0x002c,
-_0x002d = _0x0009._0x002d,
-_0x002e = _0x0009._0x002e
+local origLighting = {
+Brightness = Lighting.Brightness,
+ClockTime = Lighting.ClockTime,
+GlobalShadows = Lighting.GlobalShadows,
+FogEnd = Lighting.FogEnd
 }
-local _0x002f = 70
-if _0x0008._0x0030 then
-_0x002f = _0x0008._0x0030._0x0031
+local defaultFOV = 70
+if Workspace.CurrentCamera then
+defaultFOV = Workspace.CurrentCamera.FieldOfView
 end
-local _0x0032 = {}
-local function _0x0033()
-local _0x0034 = _0x0007:_0x000e("_0x0035")
-if not _0x0034 then return end
-local _0x0036 = _0x0034:_0x000e("_0x0037")
-if not _0x0036 then return end
-for _0x0038, _0x0039 in ipairs(_0x0036:_0x003a()) do
-if _0x0039:_0x003b("_0x003c") then
-local _0x003d, _0x003e = pcall(require, _0x0039)
-if _0x003d and type(_0x003e) == "table" and not _0x0032[_0x0039._0x003f] then
-_0x0032[_0x0039._0x003f] = {
-_0x0040 = _0x003e._0x0040 or 0,
-_0x0041 = _0x003e._0x0041 or 0,
-_0x0042 = _0x003e._0x0042 or 0,
-_0x0043 = _0x003e._0x0043 or 0.1
+local originalWeaponStats = {}
+local function saveOriginalWeaponStats()
+local weaponsFolder = ReplicatedStorage:FindFirstChild((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+if not weaponsFolder then return end
+local modulesFolder = weaponsFolder:FindFirstChild((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+if not modulesFolder then return end
+for _, mod in ipairs(modulesFolder:GetChildren()) do
+if mod:IsA((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)) then
+local success, weaponTable = pcall(require, mod)
+if success and type(weaponTable) == (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end) and not originalWeaponStats[mod.Name] then
+originalWeaponStats[mod.Name] = {
+Recoil = weaponTable.Recoil or 0,
+WRecoil = weaponTable.WRecoil or 0,
+Inaccuracy = weaponTable.Inaccuracy or 0,
+Debounce = weaponTable.Debounce or 0.1
 }
 end
 end
 end
 end
-local function _0x0044()
-local _0x0034 = _0x0007:_0x000e("_0x0035")
-if not _0x0034 then return end
-local _0x0036 = _0x0034:_0x000e("_0x0037")
-if not _0x0036 then return end
-for _0x0038, _0x0039 in ipairs(_0x0036:_0x003a()) do
-if _0x0039:_0x003b("_0x003c") then
-local _0x003d, _0x003e = pcall(require, _0x0039)
-if _0x003d and type(_0x003e) == "table" then
-local _0x0045 = _0x0032[_0x0039._0x003f]
-if _0x0045 then
-_0x003e._0x0040 = _0x0011._0x0012 and 0 or _0x0045._0x0040
-_0x003e._0x0041 = _0x0011._0x0012 and 0 or _0x0045._0x0041
-_0x003e._0x0042 = _0x0011._0x0013 and 0 or _0x0045._0x0042
-_0x003e._0x0043 = _0x0011._0x0014 and _0x0011._0x0015 or _0x0045._0x0043
+local function applyWeaponMods()
+local weaponsFolder = ReplicatedStorage:FindFirstChild((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+if not weaponsFolder then return end
+local modulesFolder = weaponsFolder:FindFirstChild((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+if not modulesFolder then return end
+for _, mod in ipairs(modulesFolder:GetChildren()) do
+if mod:IsA((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)) then
+local success, weaponTable = pcall(require, mod)
+if success and type(weaponTable) == (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end) then
+local original = originalWeaponStats[mod.Name]
+if original then
+weaponTable.Recoil = Config.NoRecoil and 0 or original.Recoil
+weaponTable.WRecoil = Config.NoRecoil and 0 or original.WRecoil
+weaponTable.Inaccuracy = Config.NoSpread and 0 or original.Inaccuracy
+weaponTable.Debounce = Config.RapidFire and Config.FireRateSpeed or original.Debounce
 end
 end
 end
 end
 end
-_0x0033()
-local function _0x0046(char)
+saveOriginalWeaponStats()
+local function bindToolEquip(char)
 if not char then return end
-char._0x0047:_0x0048(function(_0x0049)
-if _0x0049:_0x003b("_0x004a") then
-_0x004b._0x004c(0.05)
-_0x0044()
+char.ChildAdded:Connect(function(child)
+if child:IsA((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)) then
+task.wait(0.05)
+applyWeaponMods()
 end
 end)
 end
-if _0x0003._0x004d then _0x0046(_0x0003._0x004d) end
-_0x0003._0x004e:_0x0048(_0x0046)
-local function _0x004f()
-if _0x0011._0x001c then
+if LocalPlayer.Character then bindToolEquip(LocalPlayer.Character) end
+LocalPlayer.CharacterAdded:Connect(bindToolEquip)
+local function updateFOVBinding()
+if Config.FOVEnabled then
 pcall(function()
-_0x0006:_0x0050("_0x0051", _0x0027._0x0052._0x0053._0x0054 + 100, function()
-if _0x0008._0x0030 then
-_0x0008._0x0030._0x0031 = _0x0011._0x001d
+RunService:BindToRenderStep((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), Enum.RenderPriority.Camera.Value + 100, function()
+if Workspace.CurrentCamera then
+Workspace.CurrentCamera.FieldOfView = Config.FOVValue
 end
 end)
 end)
 else
 pcall(function()
-_0x0006:_0x0055("_0x0051")
+RunService:UnbindFromRenderStep((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
 end)
-if _0x0008._0x0030 then
-_0x0008._0x0030._0x0031 = _0x002f
+if Workspace.CurrentCamera then
+Workspace.CurrentCamera.FieldOfView = defaultFOV
 end
 end
 end
-local function _0x0056()
-if _0x0011._0x0023 then
-_0x0009._0x002b = 2
-_0x0009._0x002c = 14
-_0x0009._0x002d = false
+local function updateLighting()
+if Config.Fullbright then
+Lighting.Brightness = 2
+Lighting.ClockTime = 14
+Lighting.GlobalShadows = false
 else
-_0x0009._0x002b = _0x002a._0x002b
-_0x0009._0x002c = _0x002a._0x002c
-_0x0009._0x002d = _0x002a._0x002d
+Lighting.Brightness = origLighting.Brightness
+Lighting.ClockTime = origLighting.ClockTime
+Lighting.GlobalShadows = origLighting.GlobalShadows
 end
-_0x0009._0x002e = _0x0011._0x0024 and 999999 or _0x002a._0x002e
+Lighting.FogEnd = Config.NoFog and 999999 or origLighting.FogEnd
 end
-local _0x0057 = {}
-local _0x0058 = {}
-local function _0x0059(_0x005a)
-if _0x0057[_0x005a] then
-if _0x0057[_0x005a]._0x005b then _0x0057[_0x005a]:_0x0010() end
-_0x0057[_0x005a] = nil
+local esphighlights = {}
+local espBillboardTags = {}
+local function removeHighlight(userId)
+if esphighlights[userId] then
+if esphighlights[userId].Parent then esphighlights[userId]:Destroy() end
+esphighlights[userId] = nil
 end
-if _0x0058[_0x005a] then
-if _0x0058[_0x005a]._0x005b then _0x0058[_0x005a]:_0x0010() end
-_0x0058[_0x005a] = nil
+if espBillboardTags[userId] then
+if espBillboardTags[userId].Parent then espBillboardTags[userId]:Destroy() end
+espBillboardTags[userId] = nil
 end
 end
-local function _0x005c(_0x005d, char)
-if not _0x005d or _0x005d == _0x0003 or not char then return end
-_0x0059(_0x005d._0x005e)
-if not _0x0011._0x0016 then return end
-local _0x005f = char:_0x0060("_0x0061")
-local _0x0062 = char:_0x000e("_0x0063")
-if not _0x005f or _0x005f._0x0064 <= 0 then return end
-local _0x0065 = _0x0066._0x0067("_0x0068")
-_0x0065._0x003f = "_0x0069"
-_0x0065._0x006a = char
-_0x0065._0x006b = _0x0027._0x006c._0x006d
-local _0x006e = _0x0021._0x0022(255, 50, 50)
-if _0x0003._0x006f and _0x005d._0x006f and _0x0003._0x006f == _0x005d._0x006f then
-_0x006e = _0x0021._0x0022(50, 255, 50)
+local function applyESPToCharacter(player, char)
+if not player or player == LocalPlayer or not char then return end
+removeHighlight(player.UserId)
+if not Config.ESP then return end
+local humanoid = char:FindFirstChildOfClass((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local head = char:FindFirstChild((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+if not humanoid or humanoid.Health <= 0 then return end
+local highlight = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+highlight.Name = (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)
+highlight.Adornee = char
+highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+local teamColor = Color3.fromRGB(255, 50, 50)
+if LocalPlayer.Team and player.Team and LocalPlayer.Team == player.Team then
+teamColor = Color3.fromRGB(50, 255, 50)
 end
-_0x0065._0x0070 = _0x006e
-_0x0065._0x0071 = _0x0021._0x0022(255, 255, 255)
-_0x0065._0x0072 = 0.6
-_0x0065._0x0073 = 0
-_0x0065._0x005b = char
-_0x0057[_0x005d._0x005e] = _0x0065
-if _0x0062 and _0x0011._0x0017 then
-local _0x0074 = _0x0066._0x0067("_0x0075")
-_0x0074._0x003f = "_0x0076"
-_0x0074._0x006a = _0x0062
-_0x0074._0x0077 = _0x0078._0x0067(0, 200, 0, 20)
-_0x0074._0x0079 = _0x007a._0x0067(0, 3, 0)
-_0x0074._0x006d = true
-local _0x007b = _0x0066._0x0067("_0x007c")
-_0x007b._0x0077 = _0x0078._0x0067(1, 0, 1, 0)
-_0x007b._0x007d = 1
-_0x007b._0x007e = _0x005d._0x003f
-_0x007b._0x007f = _0x006e
-_0x007b._0x0080 = _0x0027._0x0080._0x0081
-_0x007b._0x0082 = 12
-_0x007b._0x0083 = 0
-_0x007b._0x005b = _0x0074
-_0x0074._0x005b = char
-_0x0058[_0x005d._0x005e] = {_0x0084 = _0x0074, _0x0085 = _0x007b, _0x0086 = _0x005d, _0x0061 = _0x005f, _0x0063 = _0x0062}
+highlight.FillColor = teamColor
+highlight.OutlineColor = Color3.fromRGB(255, 255, 255)
+highlight.FillTransparency = 0.6
+highlight.OutlineTransparency = 0
+highlight.Parent = char
+esphighlights[player.UserId] = highlight
+if head and Config.ESPNames then
+local bb = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+bb.Name = (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)
+bb.Adornee = head
+bb.Size = UDim2.new(0, 200, 0, 20)
+bb.StudsOffset = Vector3.new(0, 3, 0)
+bb.AlwaysOnTop = true
+local txt = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+txt.Size = UDim2.new(1, 0, 1, 0)
+txt.BackgroundTransparency = 1
+txt.Text = player.Name
+txt.TextColor3 = teamColor
+txt.Font = Enum.Font.Code
+txt.TextSize = 12
+txt.TextStrokeTransparency = 0
+txt.Parent = bb
+bb.Parent = char
+espBillboardTags[player.UserId] = {Gui = bb, Label = txt, Player = player, Humanoid = humanoid, Head = head}
 end
-_0x005f._0x0087:_0x0048(function() _0x0059(_0x005d._0x005e) end)
+humanoid.Died:Connect(function() removeHighlight(player.UserId) end)
 end
-_0x0006._0x0088:_0x0048(function()
-if _0x0011._0x0016 and _0x0011._0x0017 then
-local _0x0089 = _0x0003._0x004d and _0x0003._0x004d:_0x000e("_0x0063")
-for _0x005a, _0x008a in pairs(_0x0058) do
-if _0x008a and _0x008a._0x0085 and _0x008a._0x0061 and _0x008a._0x0063 then
-local _0x008b = ""
-if _0x0089 then
-local _0x008c = math.floor((_0x008a._0x0063._0x008d - _0x0089._0x008d)._0x008e)
-_0x008b = string.format(" [%_0x008f]", _0x008c)
+RunService.Heartbeat:Connect(function()
+if Config.ESP and Config.ESPNames then
+local localHead = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+for userId, data in pairs(espBillboardTags) do
+if data and data.Label and data.Humanoid and data.Head then
+local distStr = ""
+if localHead then
+local dist = math.floor((data.Head.Position - localHead.Position).Magnitude)
+distStr = string.format((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), dist)
 end
-local _0x0090 = math.floor(_0x008a._0x0061._0x0064)
-_0x008a._0x0085._0x007e = string.format("%_0x0091 | %_0x0092%_0x0091", _0x008a._0x0086._0x003f, _0x0090, _0x008b)
+local hp = math.floor(data.Humanoid.Health)
+data.Label.Text = string.format((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), data.Player.Name, hp, distStr)
 end
 end
 end
 end)
-local function _0x0093()
-for _0x005a in pairs(_0x0057) do _0x0059(_0x005a) end
-if _0x0011._0x0016 then
-for _0x0038, _0x005d in ipairs(_0x0000:_0x0094()) do
-if _0x005d._0x004d then _0x005c(_0x005d, _0x005d._0x004d) end
+local function updateESPState()
+for userId in pairs(esphighlights) do removeHighlight(userId) end
+if Config.ESP then
+for _, player in ipairs(Players:GetPlayers()) do
+if player.Character then applyESPToCharacter(player, player.Character) end
 end
 end
 end
-_0x0000._0x0095:_0x0048(function(_0x005d)
-_0x005d._0x004e:_0x0048(function(char)
-if _0x0011._0x0016 then _0x004b._0x004c(0.3) _0x005c(_0x005d, char) end
+Players.PlayerAdded:Connect(function(player)
+player.CharacterAdded:Connect(function(char)
+if Config.ESP then task.wait(0.3) applyESPToCharacter(player, char) end
 end)
 end)
-_0x0000._0x0096:_0x0048(function(_0x005d) _0x0059(_0x005d._0x005e) end)
-for _0x0038, _0x005d in ipairs(_0x0000:_0x0094()) do
-if _0x005d ~= _0x0003 then
-_0x005d._0x004e:_0x0048(function(char)
-if _0x0011._0x0016 then _0x004b._0x004c(0.3) _0x005c(_0x005d, char) end
+Players.PlayerRemoving:Connect(function(player) removeHighlight(player.UserId) end)
+for _, player in ipairs(Players:GetPlayers()) do
+if player ~= LocalPlayer then
+player.CharacterAdded:Connect(function(char)
+if Config.ESP then task.wait(0.3) applyESPToCharacter(player, char) end
 end)
 end
 end
-_0x0006._0x0088:_0x0048(function()
-local char = _0x0003._0x004d
+RunService.Heartbeat:Connect(function()
+local char = LocalPlayer.Character
 if char then
-local _0x005f = char:_0x0060("_0x0061")
-if _0x005f then
-if _0x0011._0x001a then _0x005f._0x0018 = _0x0011._0x0018 end
-if _0x0011._0x001b then
-_0x005f._0x0019 = _0x0011._0x0019
-_0x005f._0x0097 = true
+local humanoid = char:FindFirstChildOfClass((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+if humanoid then
+if Config.SpeedHack then humanoid.WalkSpeed = Config.WalkSpeed end
+if Config.JumpHack then
+humanoid.JumpPower = Config.JumpPower
+humanoid.UseJumpPower = true
 end
 end
 end
 end)
-local _0x0098 = _0x0066._0x0067("_0x0098")
-_0x0098._0x003f = "_0x000f"
-_0x0098._0x0099 = 999999
-_0x0098._0x009a = true
-_0x0098._0x005b = _0x0003:_0x000c("_0x000d")
-_0x0098._0x009b = false
-local _0x009c = _0x0066._0x0067("_0x009d")
-_0x009c._0x0077 = _0x0078._0x0067(0, 30, 0, 30)
-_0x009c._0x008d = _0x0078._0x0067(0.5, -15, 0.5, -15)
-_0x009c._0x007d = 1
-_0x009c._0x009e = _0x0011._0x001e
-_0x009c._0x005b = _0x0098
-local _0x009f = _0x0066._0x0067("_0x009d")
-_0x009f._0x0077 = _0x0078._0x0067(0, _0x0011._0x001f, 0, _0x0011._0x001f)
-_0x009f._0x008d = _0x0078._0x0067(0.5, -_0x0011._0x001f/2, 0.5, -_0x0011._0x001f/2)
-_0x009f._0x00a0 = _0x0011._0x0020
-_0x009f._0x00a1 = 0
-_0x009f._0x005b = _0x009c
-local _0x00a2 = _0x0066._0x0067("_0x009d")
-_0x00a2._0x0077 = _0x0078._0x0067(0, 500, 0, 350)
-_0x00a2._0x008d = _0x0078._0x0067(0.5, -250, 0.5, -175)
-_0x00a2._0x00a0 = _0x0021._0x0022(25, 25, 25)
-_0x00a2._0x00a1 = 1
-_0x00a2._0x00a3 = _0x0021._0x0022(45, 45, 45)
-_0x00a2._0x00a4 = 1
-_0x00a2._0x005b = _0x0098
-local _0x00a5 = _0x0066._0x0067("_0x009d")
-_0x00a5._0x0077 = _0x0078._0x0067(1, 0, 0, 30)
-_0x00a5._0x00a0 = _0x0021._0x0022(20, 20, 20)
-_0x00a5._0x00a1 = 0
-_0x00a5._0x00a4 = 2
-_0x00a5._0x005b = _0x00a2
-local _0x00a6 = _0x0066._0x0067("_0x009d")
-_0x00a6._0x0077 = _0x0078._0x0067(1, 0, 0, 1)
-_0x00a6._0x008d = _0x0078._0x0067(0, 0, 1, 0)
-_0x00a6._0x00a0 = _0x0021._0x0022(45, 45, 45)
-_0x00a6._0x00a1 = 0
-_0x00a6._0x00a4 = 3
-_0x00a6._0x005b = _0x00a5
-local _0x00a7 = _0x0066._0x0067("_0x007c")
-_0x00a7._0x0077 = _0x0078._0x0067(0, 200, 1, 0)
-_0x00a7._0x008d = _0x0078._0x0067(0, 10, 0, 0)
-_0x00a7._0x007e = "_0x00a8._0x00a9"
-_0x00a7._0x007f = _0x0021._0x0022(255, 255, 255)
-_0x00a7._0x0080 = _0x0027._0x0080._0x00aa
-_0x00a7._0x0082 = 13
-_0x00a7._0x00ab = _0x0027._0x00ab._0x00ac
-_0x00a7._0x007d = 1
-_0x00a7._0x00a4 = 3
-_0x00a7._0x005b = _0x00a5
-local _0x00ad = _0x0066._0x0067("_0x00ae")
-_0x00ad._0x0077 = _0x0078._0x0067(0, 30, 0, 30)
-_0x00ad._0x008d = _0x0078._0x0067(1, -30, 0, 0)
-_0x00ad._0x007d = 1
-_0x00ad._0x007e = "_0x00af"
-_0x00ad._0x007f = _0x0021._0x0022(150, 150, 150)
-_0x00ad._0x0080 = _0x0027._0x0080._0x00aa
-_0x00ad._0x0082 = 14
-_0x00ad._0x00a4 = 3
-_0x00ad._0x005b = _0x00a5
-_0x00ad._0x00b0:_0x0048(function()
-_0x0011._0x001c = false
-_0x004f()
-_0x0011._0x0023 = false
-_0x0011._0x0024 = false
-_0x0056()
-_0x0011._0x0016 = false
-_0x0011._0x0017 = false
-_0x0093()
-_0x0098:_0x0010()
+local ScreenGui = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+ScreenGui.Name = (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)
+ScreenGui.DisplayOrder = 999999
+ScreenGui.IgnoreGuiInset = true
+ScreenGui.Parent = LocalPlayer:WaitForChild((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+ScreenGui.ResetOnSpawn = false
+local CrosshairHolder = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+CrosshairHolder.Size = UDim2.new(0, 30, 0, 30)
+CrosshairHolder.Position = UDim2.new(0.5, -15, 0.5, -15)
+CrosshairHolder.BackgroundTransparency = 1
+CrosshairHolder.Visible = Config.CrosshairEnabled
+CrosshairHolder.Parent = ScreenGui
+local CrosshairDot = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+CrosshairDot.Size = UDim2.new(0, Config.CrosshairSize, 0, Config.CrosshairSize)
+CrosshairDot.Position = UDim2.new(0.5, -Config.CrosshairSize/2, 0.5, -Config.CrosshairSize/2)
+CrosshairDot.BackgroundColor3 = Config.CrosshairColor
+CrosshairDot.BorderSizePixel = 0
+CrosshairDot.Parent = CrosshairHolder
+local Main = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+Main.Size = UDim2.new(0, 500, 0, 350)
+Main.Position = UDim2.new(0.5, -250, 0.5, -175)
+Main.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+Main.BorderSizePixel = 1
+Main.BorderColor3 = Color3.fromRGB(45, 45, 45)
+Main.ZIndex = 1
+Main.Parent = ScreenGui
+local TopBar = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+TopBar.Size = UDim2.new(1, 0, 0, 30)
+TopBar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+TopBar.BorderSizePixel = 0
+TopBar.ZIndex = 2
+TopBar.Parent = Main
+local TopLine = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+TopLine.Size = UDim2.new(1, 0, 0, 1)
+TopLine.Position = UDim2.new(0, 0, 1, 0)
+TopLine.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+TopLine.BorderSizePixel = 0
+TopLine.ZIndex = 3
+TopLine.Parent = TopBar
+local Title = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+Title.Size = UDim2.new(0, 200, 1, 0)
+Title.Position = UDim2.new(0, 10, 0, 0)
+Title.Text = (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.Font = Enum.Font.GothamMedium
+Title.TextSize = 13
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.BackgroundTransparency = 1
+Title.ZIndex = 3
+Title.Parent = TopBar
+local CloseBtn = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+CloseBtn.Size = UDim2.new(0, 30, 0, 30)
+CloseBtn.Position = UDim2.new(1, -30, 0, 0)
+CloseBtn.BackgroundTransparency = 1
+CloseBtn.Text = (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)
+CloseBtn.TextColor3 = Color3.fromRGB(150, 150, 150)
+CloseBtn.Font = Enum.Font.GothamMedium
+CloseBtn.TextSize = 14
+CloseBtn.ZIndex = 3
+CloseBtn.Parent = TopBar
+CloseBtn.MouseButton1Click:Connect(function()
+Config.FOVEnabled = false
+updateFOVBinding()
+Config.Fullbright = false
+Config.NoFog = false
+updateLighting()
+Config.ESP = false
+Config.ESPNames = false
+updateESPState()
+ScreenGui:Destroy()
 end)
-local _0x00b1, _0x00b2, _0x00b3, _0x00b4
-_0x00a5._0x00b5:_0x0048(function(_0x00b6)
-if _0x00b6._0x00b7 == _0x0027._0x00b7._0x00b8 then
-_0x00b1 = true
-_0x00b3 = _0x00b6._0x008d
-_0x00b4 = _0x00a2._0x008d
-_0x00b6._0x00b9:_0x0048(function()
-if _0x00b6._0x00ba == _0x0027._0x00ba._0x00bb then _0x00b1 = false end
-end)
-end
-end)
-_0x00a5._0x00bc:_0x0048(function(_0x00b6)
-if _0x00b6._0x00b7 == _0x0027._0x00b7._0x00bd then _0x00b2 = _0x00b6 end
-end)
-_0x0005._0x00bc:_0x0048(function(_0x00b6)
-if _0x00b6 == _0x00b2 and _0x00b1 then
-local _0x00be = _0x00b6._0x008d - _0x00b3
-_0x00a2._0x008d = _0x0078._0x0067(_0x00b4._0x00af._0x00bf, _0x00b4._0x00af._0x00c0 + _0x00be._0x00af, _0x00b4._0x00c1._0x00bf, _0x00b4._0x00c1._0x00c0 + _0x00be._0x00c1)
-end
-end)
-_0x0005._0x00b5:_0x0048(function(_0x00b6, _0x00c2)
-if not _0x00c2 and _0x00b6._0x0028 == _0x0011._0x0026 then _0x00a2._0x009e = not _0x00a2._0x009e end
-end)
-local _0x00c3 = _0x0066._0x0067("_0x009d")
-_0x00c3._0x0077 = _0x0078._0x0067(0, 120, 1, -31)
-_0x00c3._0x008d = _0x0078._0x0067(0, 0, 0, 31)
-_0x00c3._0x00a0 = _0x0021._0x0022(20, 20, 20)
-_0x00c3._0x00a1 = 0
-_0x00c3._0x00a4 = 2
-_0x00c3._0x005b = _0x00a2
-local _0x00c4 = _0x0066._0x0067("_0x009d")
-_0x00c4._0x0077 = _0x0078._0x0067(0, 1, 1, -31)
-_0x00c4._0x008d = _0x0078._0x0067(0, 120, 0, 31)
-_0x00c4._0x00a0 = _0x0021._0x0022(45, 45, 45)
-_0x00c4._0x00a1 = 0
-_0x00c4._0x00a4 = 3
-_0x00c4._0x005b = _0x00a2
-local _0x00c5 = _0x0066._0x0067("_0x00c6")
-_0x00c5._0x00c7 = _0x0027._0x00c7._0x00c8
-_0x00c5._0x005b = _0x00c3
-local _0x00c9 = _0x0066._0x0067("_0x009d")
-_0x00c9._0x0077 = _0x0078._0x0067(1, -121, 1, -31)
-_0x00c9._0x008d = _0x0078._0x0067(0, 121, 0, 31)
-_0x00c9._0x007d = 1
-_0x00c9._0x00a4 = 2
-_0x00c9._0x005b = _0x00a2
-local _0x00ca = {}
-local function _0x00cb(_0x00cc)
-local _0x00cd = _0x0066._0x0067("_0x00ae")
-_0x00cd._0x0077 = _0x0078._0x0067(1, 0, 0, 30)
-_0x00cd._0x00a0 = _0x0021._0x0022(20, 20, 20)
-_0x00cd._0x00a1 = 0
-_0x00cd._0x007e = "  " .. _0x00cc
-_0x00cd._0x007f = _0x0021._0x0022(150, 150, 150)
-_0x00cd._0x0080 = _0x0027._0x0080._0x00ce
-_0x00cd._0x0082 = 13
-_0x00cd._0x00ab = _0x0027._0x00ab._0x00ac
-_0x00cd._0x00c8 = #_0x00c3:_0x003a()
-_0x00cd._0x00a4 = 3
-_0x00cd._0x005b = _0x00c3
-local _0x0065 = _0x0066._0x0067("_0x009d")
-_0x0065._0x0077 = _0x0078._0x0067(0, 2, 1, 0)
-_0x0065._0x00a0 = _0x0011._0x0025
-_0x0065._0x00a1 = 0
-_0x0065._0x009e = false
-_0x0065._0x00a4 = 4
-_0x0065._0x005b = _0x00cd
-local _0x00cf = _0x0066._0x0067("_0x00d0")
-_0x00cf._0x0077 = _0x0078._0x0067(1, -10, 1, -10)
-_0x00cf._0x008d = _0x0078._0x0067(0, 5, 0, 5)
-_0x00cf._0x007d = 1
-_0x00cf._0x00d1 = 4
-_0x00cf._0x00d2 = _0x0021._0x0022(60, 60, 60)
-_0x00cf._0x00a1 = 0
-_0x00cf._0x009e = false
-_0x00cf._0x00a4 = 3
-_0x00cf._0x005b = _0x00c9
-local _0x00d3 = _0x0066._0x0067("_0x00c6")
-_0x00d3._0x00d4 = _0x00d5._0x0067(0, 5)
-_0x00d3._0x00c7 = _0x0027._0x00c7._0x00c8
-_0x00d3._0x005b = _0x00cf
-_0x00d3:_0x00d6("_0x00d7"):_0x0048(function()
-_0x00cf._0x00d8 = _0x0078._0x0067(0, 0, 0, _0x00d3._0x00d7._0x00c1)
-end)
-_0x00cd._0x00b0:_0x0048(function()
-for _0x0038, _0x00d9 in pairs(_0x00ca) do
-_0x00d9._0x00da._0x009e = false
-_0x00d9._0x00db._0x007f = _0x0021._0x0022(150, 150, 150)
-_0x00d9._0x00db._0x00a0 = _0x0021._0x0022(20, 20, 20)
-_0x00d9._0x0068._0x009e = false
-end
-_0x00cf._0x009e = true
-_0x00cd._0x007f = _0x0021._0x0022(255, 255, 255)
-_0x00cd._0x00a0 = _0x0021._0x0022(30, 30, 30)
-_0x0065._0x009e = true
-end)
-_0x00ca[_0x00cc] = {_0x00db = _0x00cd, _0x00da = _0x00cf, _0x0068 = _0x0065}
-return _0x00cf
-end
-local function _0x00dc(_0x00dd, _0x00de)
-local _0x00df = _0x0066._0x0067("_0x007c")
-_0x00df._0x0077 = _0x0078._0x0067(1, 0, 0, 25)
-_0x00df._0x007d = 1
-_0x00df._0x007e = " " .. _0x00de
-_0x00df._0x007f = _0x0011._0x0025
-_0x00df._0x0080 = _0x0027._0x0080._0x00aa
-_0x00df._0x0082 = 12
-_0x00df._0x00ab = _0x0027._0x00ab._0x00ac
-_0x00df._0x00c8 = #_0x00dd:_0x003a()
-_0x00df._0x00a4 = 4
-_0x00df._0x005b = _0x00dd
-end
-local function _0x00e0(_0x00dd, _0x00de, _0x00e1, _0x00e2)
-local _0x00e3 = _0x0066._0x0067("_0x009d")
-_0x00e3._0x0077 = _0x0078._0x0067(1, 0, 0, 25)
-_0x00e3._0x007d = 1
-_0x00e3._0x00c8 = #_0x00dd:_0x003a()
-_0x00e3._0x00a4 = 4
-_0x00e3._0x005b = _0x00dd
-local _0x00cd = _0x0066._0x0067("_0x00ae")
-_0x00cd._0x0077 = _0x0078._0x0067(1, 0, 1, 0)
-_0x00cd._0x007d = 1
-_0x00cd._0x007e = ""
-_0x00cd._0x00a4 = 6
-_0x00cd._0x005b = _0x00e3
-local _0x00df = _0x0066._0x0067("_0x007c")
-_0x00df._0x0077 = _0x0078._0x0067(1, -30, 1, 0)
-_0x00df._0x008d = _0x0078._0x0067(0, 30, 0, 0)
-_0x00df._0x007d = 1
-_0x00df._0x007e = _0x00de
-_0x00df._0x007f = _0x0021._0x0022(200, 200, 200)
-_0x00df._0x0080 = _0x0027._0x0080._0x00ce
-_0x00df._0x0082 = 13
-_0x00df._0x00ab = _0x0027._0x00ab._0x00ac
-_0x00df._0x00a4 = 5
-_0x00df._0x005b = _0x00e3
-local _0x00e4 = _0x0066._0x0067("_0x009d")
-_0x00e4._0x0077 = _0x0078._0x0067(0, 16, 0, 16)
-_0x00e4._0x008d = _0x0078._0x0067(0, 5, 0.5, -8)
-_0x00e4._0x00a0 = _0x0021._0x0022(35, 35, 35)
-_0x00e4._0x00a1 = 1
-_0x00e4._0x00a3 = _0x0021._0x0022(55, 55, 55)
-_0x00e4._0x00a4 = 5
-_0x00e4._0x005b = _0x00e3
-local _0x00e5 = _0x0066._0x0067("_0x009d")
-_0x00e5._0x0077 = _0x0078._0x0067(1, -4, 1, -4)
-_0x00e5._0x008d = _0x0078._0x0067(0, 2, 0, 2)
-_0x00e5._0x00a0 = _0x0011._0x0025
-_0x00e5._0x00a1 = 0
-_0x00e5._0x009e = _0x00e1
-_0x00e5._0x00a4 = 6
-_0x00e5._0x005b = _0x00e4
-local _0x00e6 = _0x00e1
-_0x00cd._0x00b0:_0x0048(function()
-_0x00e6 = not _0x00e6
-_0x00e5._0x009e = _0x00e6
-_0x00e2(_0x00e6)
+local dragging, dragInput, dragStart, startPos
+TopBar.InputBegan:Connect(function(input)
+if input.UserInputType == Enum.UserInputType.MouseButton1 then
+dragging = true
+dragStart = input.Position
+startPos = Main.Position
+input.Changed:Connect(function()
+if input.UserInputState == Enum.UserInputState.End then dragging = false end
 end)
 end
-local function _0x00e7(_0x00dd, _0x00de, min, max, _0x00e1, _0x00e2)
-local _0x00e3 = _0x0066._0x0067("_0x009d")
-_0x00e3._0x0077 = _0x0078._0x0067(1, 0, 0, 35)
-_0x00e3._0x007d = 1
-_0x00e3._0x00c8 = #_0x00dd:_0x003a()
-_0x00e3._0x00a4 = 4
-_0x00e3._0x005b = _0x00dd
-local _0x00df = _0x0066._0x0067("_0x007c")
-_0x00df._0x0077 = _0x0078._0x0067(1, -10, 0, 15)
-_0x00df._0x008d = _0x0078._0x0067(0, 5, 0, 0)
-_0x00df._0x007d = 1
-_0x00df._0x007e = _0x00de
-_0x00df._0x007f = _0x0021._0x0022(200, 200, 200)
-_0x00df._0x0080 = _0x0027._0x0080._0x00ce
-_0x00df._0x0082 = 13
-_0x00df._0x00ab = _0x0027._0x00ab._0x00ac
-_0x00df._0x00a4 = 5
-_0x00df._0x005b = _0x00e3
-local _0x00e8 = _0x0066._0x0067("_0x007c")
-_0x00e8._0x0077 = _0x0078._0x0067(0, 50, 0, 15)
-_0x00e8._0x008d = _0x0078._0x0067(1, -55, 0, 0)
-_0x00e8._0x007d = 1
-_0x00e8._0x007e = tostring(_0x00e1)
-_0x00e8._0x007f = _0x0021._0x0022(255, 255, 255)
-_0x00e8._0x0080 = _0x0027._0x0080._0x00ce
-_0x00e8._0x0082 = 13
-_0x00e8._0x00ab = _0x0027._0x00ab._0x00e9
-_0x00e8._0x00a4 = 5
-_0x00e8._0x005b = _0x00e3
-local _0x00ea = _0x0066._0x0067("_0x009d")
-_0x00ea._0x0077 = _0x0078._0x0067(1, -10, 0, 4)
-_0x00ea._0x008d = _0x0078._0x0067(0, 5, 0, 22)
-_0x00ea._0x00a0 = _0x0021._0x0022(40, 40, 40)
-_0x00ea._0x00a1 = 0
-_0x00ea._0x00a4 = 5
-_0x00ea._0x005b = _0x00e3
-local _0x00e5 = _0x0066._0x0067("_0x009d")
-local _0x00eb = (_0x00e1 - min) / (max - min)
-_0x00e5._0x0077 = _0x0078._0x0067(_0x00eb, 0, 1, 0)
-_0x00e5._0x00a0 = _0x0011._0x0025
-_0x00e5._0x00a1 = 0
-_0x00e5._0x00a4 = 6
-_0x00e5._0x005b = _0x00ea
-local _0x00cd = _0x0066._0x0067("_0x00ae")
-_0x00cd._0x0077 = _0x0078._0x0067(1, 0, 1, 10)
-_0x00cd._0x008d = _0x0078._0x0067(0, 0, 0, -5)
-_0x00cd._0x007d = 1
-_0x00cd._0x007e = ""
-_0x00cd._0x00a4 = 7
-_0x00cd._0x005b = _0x00ea
-local _0x00ec = false
-local function _0x00ed(_0x00b6)
-local _0x00ee = math._0x00ef((_0x00b6._0x008d._0x00af - _0x00ea._0x00f0._0x00af) / _0x00ea._0x00f1._0x00af, 0, 1)
-local _0x00f2 = math.floor(min + (max - min) * _0x00ee)
-_0x00e5._0x0077 = _0x0078._0x0067(_0x00ee, 0, 1, 0)
-_0x00e8._0x007e = tostring(_0x00f2)
-_0x00e2(_0x00f2)
-end
-_0x00cd._0x00b5:_0x0048(function(_0x00b6)
-if _0x00b6._0x00b7 == _0x0027._0x00b7._0x00b8 then
-_0x00ec = true
-_0x00ed(_0x00b6)
+end)
+TopBar.InputChanged:Connect(function(input)
+if input.UserInputType == Enum.UserInputType.MouseMovement then dragInput = input end
+end)
+UserInputService.InputChanged:Connect(function(input)
+if input == dragInput and dragging then
+local delta = input.Position - dragStart
+Main.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 end)
-_0x00cd._0x00f3:_0x0048(function(_0x00b6)
-if _0x00b6._0x00b7 == _0x0027._0x00b7._0x00b8 then _0x00ec = false end
+UserInputService.InputBegan:Connect(function(input, processed)
+if not processed and input.KeyCode == Config.ToggleKey then Main.Visible = not Main.Visible end
 end)
-_0x0005._0x00bc:_0x0048(function(_0x00b6)
-if _0x00ec and _0x00b6._0x00b7 == _0x0027._0x00b7._0x00bd then _0x00ed(_0x00b6) end
+local Sidebar = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+Sidebar.Size = UDim2.new(0, 120, 1, -31)
+Sidebar.Position = UDim2.new(0, 0, 0, 31)
+Sidebar.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+Sidebar.BorderSizePixel = 0
+Sidebar.ZIndex = 2
+Sidebar.Parent = Main
+local SideLine = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+SideLine.Size = UDim2.new(0, 1, 1, -31)
+SideLine.Position = UDim2.new(0, 120, 0, 31)
+SideLine.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+SideLine.BorderSizePixel = 0
+SideLine.ZIndex = 3
+SideLine.Parent = Main
+local SidebarList = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+SidebarList.SortOrder = Enum.SortOrder.LayoutOrder
+SidebarList.Parent = Sidebar
+local Container = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+Container.Size = UDim2.new(1, -121, 1, -31)
+Container.Position = UDim2.new(0, 121, 0, 31)
+Container.BackgroundTransparency = 1
+Container.ZIndex = 2
+Container.Parent = Main
+local tabs = {}
+local function createTab(name)
+local btn = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+btn.Size = UDim2.new(1, 0, 0, 30)
+btn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+btn.BorderSizePixel = 0
+btn.Text = (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end) .. name
+btn.TextColor3 = Color3.fromRGB(150, 150, 150)
+btn.Font = Enum.Font.Gotham
+btn.TextSize = 13
+btn.TextXAlignment = Enum.TextXAlignment.Left
+btn.LayoutOrder = #Sidebar:GetChildren()
+btn.ZIndex = 3
+btn.Parent = Sidebar
+local highlight = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+highlight.Size = UDim2.new(0, 2, 1, 0)
+highlight.BackgroundColor3 = Config.Accent
+highlight.BorderSizePixel = 0
+highlight.Visible = false
+highlight.ZIndex = 4
+highlight.Parent = btn
+local page = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+page.Size = UDim2.new(1, -10, 1, -10)
+page.Position = UDim2.new(0, 5, 0, 5)
+page.BackgroundTransparency = 1
+page.ScrollBarThickness = 4
+page.ScrollBarImageColor3 = Color3.fromRGB(60, 60, 60)
+page.BorderSizePixel = 0
+page.Visible = false
+page.ZIndex = 3
+page.Parent = Container
+local list = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+list.Padding = UDim.new(0, 5)
+list.SortOrder = Enum.SortOrder.LayoutOrder
+list.Parent = page
+list:GetPropertyChangedSignal((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)):Connect(function()
+page.CanvasSize = UDim2.new(0, 0, 0, list.AbsoluteContentSize.Y)
+end)
+btn.MouseButton1Click:Connect(function()
+for _, t in pairs(tabs) do
+t.Page.Visible = false
+t.Btn.TextColor3 = Color3.fromRGB(150, 150, 150)
+t.Btn.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+t.Highlight.Visible = false
+end
+page.Visible = true
+btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+btn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+highlight.Visible = true
+end)
+tabs[name] = {Btn = btn, Page = page, Highlight = highlight}
+return page
+end
+local function createLabel(tab, text)
+local lbl = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+lbl.Size = UDim2.new(1, 0, 0, 25)
+lbl.BackgroundTransparency = 1
+lbl.Text = (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end) .. text
+lbl.TextColor3 = Config.Accent
+lbl.Font = Enum.Font.GothamMedium
+lbl.TextSize = 12
+lbl.TextXAlignment = Enum.TextXAlignment.Left
+lbl.LayoutOrder = #tab:GetChildren()
+lbl.ZIndex = 4
+lbl.Parent = tab
+end
+local function createToggle(tab, text, default, callback)
+local frame = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+frame.Size = UDim2.new(1, 0, 0, 25)
+frame.BackgroundTransparency = 1
+frame.LayoutOrder = #tab:GetChildren()
+frame.ZIndex = 4
+frame.Parent = tab
+local btn = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+btn.Size = UDim2.new(1, 0, 1, 0)
+btn.BackgroundTransparency = 1
+btn.Text = ""
+btn.ZIndex = 6
+btn.Parent = frame
+local lbl = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+lbl.Size = UDim2.new(1, -30, 1, 0)
+lbl.Position = UDim2.new(0, 30, 0, 0)
+lbl.BackgroundTransparency = 1
+lbl.Text = text
+lbl.TextColor3 = Color3.fromRGB(200, 200, 200)
+lbl.Font = Enum.Font.Gotham
+lbl.TextSize = 13
+lbl.TextXAlignment = Enum.TextXAlignment.Left
+lbl.ZIndex = 5
+lbl.Parent = frame
+local box = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+box.Size = UDim2.new(0, 16, 0, 16)
+box.Position = UDim2.new(0, 5, 0.5, -8)
+box.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+box.BorderSizePixel = 1
+box.BorderColor3 = Color3.fromRGB(55, 55, 55)
+box.ZIndex = 5
+box.Parent = frame
+local fill = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+fill.Size = UDim2.new(1, -4, 1, -4)
+fill.Position = UDim2.new(0, 2, 0, 2)
+fill.BackgroundColor3 = Config.Accent
+fill.BorderSizePixel = 0
+fill.Visible = default
+fill.ZIndex = 6
+fill.Parent = box
+local active = default
+btn.MouseButton1Click:Connect(function()
+active = not active
+fill.Visible = active
+callback(active)
 end)
 end
-local function _0x00f4(_0x00dd, _0x00de, _0x00e2)
-local _0x00cd = _0x0066._0x0067("_0x00ae")
-_0x00cd._0x0077 = _0x0078._0x0067(1, -10, 0, 25)
-_0x00cd._0x008d = _0x0078._0x0067(0, 5, 0, 0)
-_0x00cd._0x00a0 = _0x0021._0x0022(35, 35, 35)
-_0x00cd._0x00a1 = 1
-_0x00cd._0x00a3 = _0x0021._0x0022(55, 55, 55)
-_0x00cd._0x007e = _0x00de
-_0x00cd._0x007f = _0x0021._0x0022(220, 220, 220)
-_0x00cd._0x0080 = _0x0027._0x0080._0x00ce
-_0x00cd._0x0082 = 12
-_0x00cd._0x00c8 = #_0x00dd:_0x003a()
-_0x00cd._0x00a4 = 5
-_0x00cd._0x005b = _0x00dd
-_0x00cd._0x00b0:_0x0048(_0x00e2)
+local function createSlider(tab, text, min, max, default, callback)
+local frame = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+frame.Size = UDim2.new(1, 0, 0, 35)
+frame.BackgroundTransparency = 1
+frame.LayoutOrder = #tab:GetChildren()
+frame.ZIndex = 4
+frame.Parent = tab
+local lbl = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+lbl.Size = UDim2.new(1, -10, 0, 15)
+lbl.Position = UDim2.new(0, 5, 0, 0)
+lbl.BackgroundTransparency = 1
+lbl.Text = text
+lbl.TextColor3 = Color3.fromRGB(200, 200, 200)
+lbl.Font = Enum.Font.Gotham
+lbl.TextSize = 13
+lbl.TextXAlignment = Enum.TextXAlignment.Left
+lbl.ZIndex = 5
+lbl.Parent = frame
+local valLbl = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+valLbl.Size = UDim2.new(0, 50, 0, 15)
+valLbl.Position = UDim2.new(1, -55, 0, 0)
+valLbl.BackgroundTransparency = 1
+valLbl.Text = tostring(default)
+valLbl.TextColor3 = Color3.fromRGB(255, 255, 255)
+valLbl.Font = Enum.Font.Gotham
+valLbl.TextSize = 13
+valLbl.TextXAlignment = Enum.TextXAlignment.Right
+valLbl.ZIndex = 5
+valLbl.Parent = frame
+local barbg = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+barbg.Size = UDim2.new(1, -10, 0, 4)
+barbg.Position = UDim2.new(0, 5, 0, 22)
+barbg.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+barbg.BorderSizePixel = 0
+barbg.ZIndex = 5
+barbg.Parent = frame
+local fill = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local pct = (default - min) / (max - min)
+fill.Size = UDim2.new(pct, 0, 1, 0)
+fill.BackgroundColor3 = Config.Accent
+fill.BorderSizePixel = 0
+fill.ZIndex = 6
+fill.Parent = barbg
+local btn = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+btn.Size = UDim2.new(1, 0, 1, 10)
+btn.Position = UDim2.new(0, 0, 0, -5)
+btn.BackgroundTransparency = 1
+btn.Text = ""
+btn.ZIndex = 7
+btn.Parent = barbg
+local sliding = false
+local function update(input)
+local pos = math.clamp((input.Position.X - barbg.AbsolutePosition.X) / barbg.AbsoluteSize.X, 0, 1)
+local val = math.floor(min + (max - min) * pos)
+fill.Size = UDim2.new(pos, 0, 1, 0)
+valLbl.Text = tostring(val)
+callback(val)
 end
-local _0x00f5 = _0x00cb("_0x00f6")
-local _0x00f7 = _0x00cb("_0x00f8")
-local _0x00f9 = _0x00cb("_0x0003")
-local _0x00fa = _0x00cb("_0x00fb")
-_0x00dc(_0x00f5, "_0x00fc _0x00fd")
-_0x00e0(_0x00f5, "_0x00fe _0x0040", false, function(_0x00ff)
-_0x0011._0x0012 = _0x00ff
-_0x0044()
-end)
-_0x00e0(_0x00f5, "_0x00fe _0x0100", false, function(_0x00ff)
-_0x0011._0x0013 = _0x00ff
-_0x0044()
-end)
-_0x00e0(_0x00f5, "_0x0101 _0x0102", false, function(_0x00ff)
-_0x0011._0x0014 = _0x00ff
-_0x0044()
-end)
-_0x00e7(_0x00f5, "_0x0102 _0x0103 _0x0104", 1, 10, 4, function(_0x00ff)
-_0x0011._0x0015 = _0x00ff / 100
-if _0x0011._0x0014 then _0x0044() end
-end)
-_0x00dc(_0x00f7, "_0x0016")
-_0x00e0(_0x00f7, "_0x0105 _0x0016", false, function(_0x00ff)
-_0x0011._0x0016 = _0x00ff
-_0x0093()
-end)
-_0x00e0(_0x00f7, "_0x0106 _0x0107 & _0x0108", false, function(_0x00ff)
-_0x0011._0x0017 = _0x00ff
-_0x0093()
-end)
-_0x00dc(_0x00f7, "_0x0109")
-_0x00e0(_0x00f7, "_0x0023", false, function(_0x00ff)
-_0x0011._0x0023 = _0x00ff
-_0x0056()
-end)
-_0x00e0(_0x00f7, "_0x010a _0x010b", false, function(_0x00ff)
-_0x0011._0x0024 = _0x00ff
-_0x0056()
-end)
-_0x00dc(_0x00f9, "_0x010c")
-_0x00e0(_0x00f9, "_0x0018 _0x010d", false, function(_0x00ff)
-_0x0011._0x001a = _0x00ff
-if not _0x00ff and _0x0003._0x004d and _0x0003._0x004d:_0x000e("_0x0061") then
-_0x0003._0x004d._0x0061._0x0018 = 16
-end
-end)
-_0x00e7(_0x00f9, "_0x0018", 16, 120, 16, function(_0x00ff) _0x0011._0x0018 = _0x00ff end)
-_0x00e0(_0x00f9, "_0x0019", false, function(_0x00ff)
-_0x0011._0x001b = _0x00ff
-if not _0x00ff and _0x0003._0x004d and _0x0003._0x004d:_0x000e("_0x0061") then
-_0x0003._0x004d._0x0061._0x0019 = 50
+btn.InputBegan:Connect(function(input)
+if input.UserInputType == Enum.UserInputType.MouseButton1 then
+sliding = true
+update(input)
 end
 end)
-_0x00e7(_0x00f9, "_0x0019", 50, 200, 50, function(_0x00ff) _0x0011._0x0019 = _0x00ff end)
-_0x00dc(_0x00f9, "_0x0053")
-_0x00e0(_0x00f9, "_0x010e _0x010f", false, function(_0x00ff)
-_0x0011._0x001c = _0x00ff
-_0x004f()
+btn.InputEnded:Connect(function(input)
+if input.UserInputType == Enum.UserInputType.MouseButton1 then sliding = false end
 end)
-_0x00e7(_0x00f9, "_0x010f _0x0110", 70, 120, 90, function(_0x00ff)
-_0x0011._0x001d = _0x00ff
-if _0x0011._0x001c then _0x004f() end
+UserInputService.InputChanged:Connect(function(input)
+if sliding and input.UserInputType == Enum.UserInputType.MouseMovement then update(input) end
 end)
-_0x00dc(_0x00fa, "_0x0111")
-_0x00e0(_0x00fa, "_0x0106 _0x0112", false, function(_0x00ff)
-_0x0011._0x001e = _0x00ff
-_0x009c._0x009e = _0x00ff
+end
+local function createButton(tab, text, callback)
+local btn = Instance.new((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+btn.Size = UDim2.new(1, -10, 0, 25)
+btn.Position = UDim2.new(0, 5, 0, 0)
+btn.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+btn.BorderSizePixel = 1
+btn.BorderColor3 = Color3.fromRGB(55, 55, 55)
+btn.Text = text
+btn.TextColor3 = Color3.fromRGB(220, 220, 220)
+btn.Font = Enum.Font.Gotham
+btn.TextSize = 12
+btn.LayoutOrder = #tab:GetChildren()
+btn.ZIndex = 5
+btn.Parent = tab
+btn.MouseButton1Click:Connect(callback)
+end
+local tabCombat = createTab((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local tabVisuals = createTab((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local tabPlayer = createTab((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+local tabMisc = createTab((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+createLabel(tabCombat, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+createToggle(tabCombat, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), false, function(v)
+Config.NoRecoil = v
+applyWeaponMods()
 end)
-_0x00e7(_0x00fa, "_0x0112 _0x0077", 2, 14, 6, function(_0x00ff)
-_0x0011._0x001f = _0x00ff
-_0x009f._0x0077 = _0x0078._0x0067(0, _0x00ff, 0, _0x00ff)
-_0x009f._0x008d = _0x0078._0x0067(0.5, -_0x00ff/2, 0.5, -_0x00ff/2)
+createToggle(tabCombat, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), false, function(v)
+Config.NoSpread = v
+applyWeaponMods()
 end)
-_0x00dc(_0x00fa, "_0x0113 _0x0114")
-_0x00f4(_0x00fa, "_0x0115 _0x0113", function() pcall(function() _0x000a:_0x0116(_0x0001._0x0117, _0x0001._0x0118, _0x0003) end) end)
-_0x00f4(_0x00fa, "_0x0113 _0x0119", function() pcall(function() _0x000a:_0x011a(_0x0001._0x0117, _0x0003) end) end)
-_0x00ca["_0x00f6"]._0x00db._0x007f = _0x0021._0x0022(255, 255, 255)
-_0x00ca["_0x00f6"]._0x00db._0x00a0 = _0x0021._0x0022(30, 30, 30)
-_0x00ca["_0x00f6"]._0x0068._0x009e = true
-_0x00ca["_0x00f6"]._0x00da._0x009e = true
+createToggle(tabCombat, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), false, function(v)
+Config.RapidFire = v
+applyWeaponMods()
+end)
+createSlider(tabCombat, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), 1, 10, 4, function(v)
+Config.FireRateSpeed = v / 100
+if Config.RapidFire then applyWeaponMods() end
+end)
+createLabel(tabVisuals, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+createToggle(tabVisuals, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), false, function(v)
+Config.ESP = v
+updateESPState()
+end)
+createToggle(tabVisuals, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), false, function(v)
+Config.ESPNames = v
+updateESPState()
+end)
+createLabel(tabVisuals, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+createToggle(tabVisuals, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), false, function(v)
+Config.Fullbright = v
+updateLighting()
+end)
+createToggle(tabVisuals, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), false, function(v)
+Config.NoFog = v
+updateLighting()
+end)
+createLabel(tabPlayer, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+createToggle(tabPlayer, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), false, function(v)
+Config.SpeedHack = v
+if not v and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)) then
+LocalPlayer.Character.Humanoid.WalkSpeed = 16
+end
+end)
+createSlider(tabPlayer, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), 16, 120, 16, function(v) Config.WalkSpeed = v end)
+createToggle(tabPlayer, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), false, function(v)
+Config.JumpHack = v
+if not v and LocalPlayer.Character and LocalPlayer.Character:FindFirstChild((function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)) then
+LocalPlayer.Character.Humanoid.JumpPower = 50
+end
+end)
+createSlider(tabPlayer, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), 50, 200, 50, function(v) Config.JumpPower = v end)
+createLabel(tabPlayer, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+createToggle(tabPlayer, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), false, function(v)
+Config.FOVEnabled = v
+updateFOVBinding()
+end)
+createSlider(tabPlayer, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), 70, 120, 90, function(v)
+Config.FOVValue = v
+if Config.FOVEnabled then updateFOVBinding() end
+end)
+createLabel(tabMisc, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+createToggle(tabMisc, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), false, function(v)
+Config.CrosshairEnabled = v
+CrosshairHolder.Visible = v
+end)
+createSlider(tabMisc, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), 2, 14, 6, function(v)
+Config.CrosshairSize = v
+CrosshairDot.Size = UDim2.new(0, v, 0, v)
+CrosshairDot.Position = UDim2.new(0.5, -v/2, 0.5, -v/2)
+end)
+createLabel(tabMisc, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end))
+createButton(tabMisc, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), function() pcall(function() TeleportService:TeleportToPlaceInstance(game.PlaceId, game.JobId, LocalPlayer) end) end)
+createButton(tabMisc, (function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end), function() pcall(function() TeleportService:Teleport(game.PlaceId, LocalPlayer) end) end)
+tabs[(function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)].Btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+tabs[(function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)].Btn.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+tabs[(function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)].Highlight.Visible = true
+tabs[(function(t,k)local s=""for i=1,#t do s=s..string.char(t[i]~(((k+i-1)%255)+1))end return s end)].Page.Visible = true
