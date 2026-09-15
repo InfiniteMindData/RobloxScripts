@@ -1,0 +1,85 @@
+-- This script protects against client detection routines and drops suspicious outgoing network events
+
+local function NeutralizeAntiCheat()
+    -- Scan active functions in garbage collection to disarm client side security tables
+    pcall(function()
+        for _, obj in ipairs(getgc(false)) do
+            if type(obj) == "function" and not isexecutorclosure(obj) and debug.info(obj, "s") ~= "[C]" then
+                local source = debug.info(obj, "s") or ""
+                if source:find("Client.Core.Anti") or source:find("Anti_Cheat") or source:find("Anti") then
+                    local upvalues = debug.getupvalues(obj)
+                    for _, val in pairs(upvalues) do
+                        if type(val) == "table" then
+                            pcall(function()
+                                if isreadonly and isreadonly(val) and setreadonly then
+                                    setreadonly(val, false)
+                                end
+
+                                if rawget(val, "namecallInstance") or rawget(val, "MainDetection") or rawget(val, "Detectors") then
+                                    for key in pairs(val) do
+                                        val[key] = function() return false end
+                                    end
+                                end
+
+                                if rawget(val, "Detected") then
+                                    rawset(val, "Detected", function() return false end)
+                                end
+                                if rawget(val, "crash") then
+                                    rawset(val, "crash", function() return false end)
+                                end
+                                if rawget(val, "kill") then
+                                    rawset(val, "kill", function() return false end)
+                                end
+                            end)
+                        end
+                    end
+                end
+            end
+        end
+    end)
+
+    -- Intercept outgoing server calls and silently discard flagged detection traffic
+    pcall(function()
+        local ReplicatedStorage = game:GetService("ReplicatedStorage")
+        local flaggedRemotes = {}
+
+        local honestyFolder = ReplicatedStorage:FindFirstChild("Packages")
+            and ReplicatedStorage.Packages:FindFirstChild("Knit")
+            and ReplicatedStorage.Packages.Knit:FindFirstChild("Services")
+            and ReplicatedStorage.Packages.Knit.Services:FindFirstChild("HonestyService")
+            and ReplicatedStorage.Packages.Knit.Services.HonestyService:FindFirstChild("RE")
+
+        if honestyFolder then
+            for _, remote in ipairs(honestyFolder:GetChildren()) do
+                if remote:IsA("RemoteEvent") then
+                    flaggedRemotes[remote] = true
+                end
+            end
+            honestyFolder.ChildAdded:Connect(function(child)
+                if child:IsA("RemoteEvent") then
+                    flaggedRemotes[child] = true
+                end
+            end)
+        end
+
+        if hookfunction then
+            local originalFireServer
+            originalFireServer = hookfunction(Instance.new("RemoteEvent").FireServer, newcclosure(function(self, ...)
+                if self and (flaggedRemotes[self] or (self.Parent and self.Parent.Name == "RE" and self.Parent.Parent and self.Parent.Parent.Name == "HonestyService")) then
+                    return
+                end
+                return originalFireServer(self, ...)
+            end))
+        end
+    end)
+end
+
+NeutralizeAntiCheat()
+
+pcall(function()
+    game:GetService("StarterGui"):SetCore("SendNotification", {
+        Title = "Mafia Clash",
+        Text = "Anti Cheat Bypassed",
+        Duration = 4
+    })
+end)
